@@ -33,4 +33,4 @@
   root-package = "github.com/johnkls/go-docker"
   go-version = "1.12.5"
   ensure = true
-  install = "cmd/maicn.go"
+  install = "cmd/main.go"
