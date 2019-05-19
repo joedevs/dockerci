@@ -3,11 +3,15 @@ jobs:
   build:
     docker:
       - image: circleci/golang:1.9
-    working-directory: /go/src/github.com/joedevs/dockerci
 
     environment:
       LOG_FILE_LOCATION: /tmp/test_results
+      GOPATH: /home/ubuntu/.go_workspace
+      IMPORT_PATH: github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
 
+    working-directory: $GOPATH/src/github.com/joedevs/dockerci
+    general:
+      build_dir: ../.go_workspace/src/$IMPORT_PATH
     steps:
       - checkout
       - run: mkdir -p $LOG_FILE_LOCATION
