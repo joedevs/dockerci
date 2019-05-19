@@ -2,19 +2,19 @@ version: 2
 jobs:
   build:
     docker:
-      -image: circleci/golang:1.9
+      - image: circleci/golang:1.9
     working-directory: /go/src/github.com/joedevs/dockerci
 
     environment:
       LOG_FILE_LOCATION: /tmp/test_results
 
-    - restore_cache: # restores saved cache if no changes are detected since last run
-        # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
-        keys:
-          - v1-pkg-cache
     steps:
       - checkout
       - run: mkdir -p $LOG_FILE_LOCATION
+      - restore_cache: # restores saved cache if no changes are detected since last run
+          # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
+          keys:
+            - v1-pkg-cache
       - run: go get -u github.com/golang/dep/cmd/dep
       - run:
           name: run build
