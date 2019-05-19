@@ -1,4 +1,4 @@
-package go_docker
+package main
 
 import (
 	"context"
@@ -13,16 +13,16 @@ import (
 	"time"
 )
 
-func main()  {
+func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", handler)
 
 	port := os.Getenv("PORT")
 
 	srv := &http.Server{
-		Handler:r,
-		Addr: ":"+port,
-		ReadTimeout: 10 * time.Second,
+		Handler:      r,
+		Addr:         ":" + port,
+		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 10 * time.Second,
 	}
 
@@ -40,7 +40,7 @@ func main()  {
 
 	go func() {
 		log.Println("Starting server...")
-		log.Println("Server running on port"+port)
+		log.Println("Server running on port" + port)
 		if err := srv.ListenAndServe(); err != nil {
 			log.Fatal(err)
 		}
@@ -56,7 +56,7 @@ func waitForShutdown(server *http.Server) {
 	interruptChan := make(chan os.Signal, 1)
 	signal.Notify(interruptChan, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
 
-	<- interruptChan
+	<-interruptChan
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
 	defer cancel()
@@ -79,4 +79,3 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 }
-
