@@ -1,9 +1,12 @@
 version: 2
 jobs:
   build:
+    working_directory: /go/src/github.com/joedevs/dockerci
     docker:
-      - image: circleci/golang:1.9
-    working-directory: /go/src/github.com/joedevs/dockerci
+      - image: circleci/golang:1.12
+
+    environment:
+      LOG_FILE_LOCATION: /tmp/test_results
 
     steps:
       - checkout
@@ -17,7 +20,7 @@ jobs:
           name: run build
           command: |
             dep ensure
-            go build -v
+            go build -v ./...
       - run:
           name: run tests
           command: |
